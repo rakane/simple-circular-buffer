@@ -73,8 +73,4 @@ export class CircularBuffer<T> {
 
     return item;
   }
-
-  print() {
-    console.log(this._buffer);
-  }
 }
