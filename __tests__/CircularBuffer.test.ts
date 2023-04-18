@@ -5,6 +5,8 @@ test('CircularBuffer - Overwrite not allowed', () => {
   expect(buffer.capacity).toBe(5);
   expect(buffer.size).toBe(0);
   expect(buffer.allowOverwrite).toBe(false);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
 
   // Fill the buffer
   expect(buffer.put(1)).toBe(true);
@@ -16,6 +18,8 @@ test('CircularBuffer - Overwrite not allowed', () => {
   expect(buffer.size).toBe(5);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(false);
+  expect(buffer.isFull()).toBe(true);
 
   // Read the buffer
   expect(buffer.get()).toBe(1);
@@ -27,6 +31,8 @@ test('CircularBuffer - Overwrite not allowed', () => {
   expect(buffer.size).toBe(0);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
 
   // Fill the buffer again
   expect(buffer.put(6)).toBe(true);
@@ -39,6 +45,8 @@ test('CircularBuffer - Overwrite not allowed', () => {
   expect(buffer.size).toBe(5);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(false);
+  expect(buffer.isFull()).toBe(true);
 
   // Read the buffer again (6 should be overwritten)
   expect(buffer.get()).toBe(6);
@@ -50,6 +58,22 @@ test('CircularBuffer - Overwrite not allowed', () => {
   expect(buffer.size).toBe(0);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
+
+  // Fill the buffer again
+  expect(buffer.put(12)).toBe(true);
+  expect(buffer.put(13)).toBe(true);
+  expect(buffer.put(14)).toBe(true);
+  expect(buffer.isEmpty()).toBe(false);
+  expect(buffer.isFull()).toBe(false);
+
+  buffer.clear();
+  expect(buffer.size).toBe(0);
+  expect(buffer._readIndex).toBe(0);
+  expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
 });
 
 test('CircularBuffer - Overwrite allowed', () => {
@@ -57,6 +81,8 @@ test('CircularBuffer - Overwrite allowed', () => {
   expect(buffer.capacity).toBe(5);
   expect(buffer.size).toBe(0);
   expect(buffer.allowOverwrite).toBe(true);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
 
   // Fill the buffer
   expect(buffer.put(1)).toBe(true);
@@ -68,6 +94,8 @@ test('CircularBuffer - Overwrite allowed', () => {
   expect(buffer.size).toBe(5);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(false);
+  expect(buffer.isFull()).toBe(true);
 
   // Read the buffer
   expect(buffer.get()).toBe(1);
@@ -79,6 +107,8 @@ test('CircularBuffer - Overwrite allowed', () => {
   expect(buffer.size).toBe(0);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
 
   // Fill the buffer again
   expect(buffer.put(6)).toBe(true);
@@ -91,6 +121,8 @@ test('CircularBuffer - Overwrite allowed', () => {
   expect(buffer.size).toBe(5);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(1);
+  expect(buffer.isEmpty()).toBe(false);
+  expect(buffer.isFull()).toBe(true);
 
   // Read the buffer again (6 should be overwritten)
   expect(buffer.get()).toBe(11);
@@ -102,4 +134,20 @@ test('CircularBuffer - Overwrite allowed', () => {
   expect(buffer.size).toBe(0);
   expect(buffer._readIndex).toBe(0);
   expect(buffer._writeIndex).toBe(1);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
+
+  // Fill the buffer again
+  expect(buffer.put(12)).toBe(true);
+  expect(buffer.put(13)).toBe(true);
+  expect(buffer.put(14)).toBe(true);
+  expect(buffer.isEmpty()).toBe(false);
+  expect(buffer.isFull()).toBe(false);
+
+  buffer.clear();
+  expect(buffer.size).toBe(0);
+  expect(buffer._readIndex).toBe(0);
+  expect(buffer._writeIndex).toBe(0);
+  expect(buffer.isEmpty()).toBe(true);
+  expect(buffer.isFull()).toBe(false);
 });

@@ -35,18 +35,6 @@ export class CircularBuffer<T> {
     this._allowOverwrite = allowOverwrite;
   }
 
-  get capacity() {
-    return this._capacity;
-  }
-
-  get size() {
-    return this._size;
-  }
-
-  get allowOverwrite() {
-    return this._allowOverwrite;
-  }
-
   put(item: T): boolean {
     const canWrite = this._allowOverwrite || this._size < this._capacity;
 
@@ -72,5 +60,31 @@ export class CircularBuffer<T> {
     this._size--;
 
     return item;
+  }
+
+  clear() {
+    this._size = 0;
+    this._readIndex = 0;
+    this._writeIndex = 0;
+  }
+
+  isEmpty() {
+    return this._size === 0;
+  }
+
+  isFull() {
+    return this._size === this._capacity;
+  }
+
+  get capacity() {
+    return this._capacity;
+  }
+
+  get size() {
+    return this._size;
+  }
+
+  get allowOverwrite() {
+    return this._allowOverwrite;
   }
 }
